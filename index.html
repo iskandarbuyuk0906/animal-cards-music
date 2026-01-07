@@ -45,25 +45,36 @@
   </div>
 
   <script>
-    const btn = document.getElementById('btn');
+      const btn = document.getElementById('btn');
     const player = document.getElementById('player');
 
   btn.addEventListener('click', async () => {
+    // Если играет — ставим на паузу
     if (!player.paused) {
       player.pause();
-      player.currentTime = 0; // <-- это и есть "стоп"
       return;
     }
+
+    // Если на паузе — продолжаем с того же места
     try {
       await player.play();
     } catch (e) {
-      alert('Не получилось запустить. Проверьте mp3-ссылку/файл.');}});
-    
-    player.addEventListener('pause', () => { btn.textContent = '▶️ Пуск'; });
-    player.addEventListener('play',  () => { btn.textContent = '🛑 Стоп'; });
+      alert('Не удалось запустить аудио. Проверьте файл MP3.');
+    }
+  });
+
+  // Меняем текст кнопки по реальному состоянию плеера
+  player.addEventListener('play',  () => {
+    btn.textContent = '⏸ Пауза';
+  });
+
+    player.addEventListener('pause', () => {
+    btn.textContent = '▶️ Play';
+  });
   </script>
 </body>
 </html>
+
 
 
 
