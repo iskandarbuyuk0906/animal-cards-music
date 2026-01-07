@@ -48,19 +48,22 @@
     const btn = document.getElementById('btn');
     const player = document.getElementById('player');
 
-    btn.addEventListener('click', async () => {
-      try {
-        await player.play();
-        btn.textContent = '⏸️ Пауза';
-      } catch (e) {
-        alert('Не получилось запустить. Проверьте, что ссылка ведёт прямо на .mp3');
-      }
-    });
-
+  btn.addEventListener('click', async () => {
+    if (!player.paused) {
+      player.pause();
+      player.currentTime = 0; // <-- это и есть "стоп"
+      return;
+    }
+    try {
+      await player.play();
+    } catch (e) {
+      alert('Не получилось запустить. Проверьте mp3-ссылку/файл.');}});
+    
     player.addEventListener('pause', () => { btn.textContent = '▶️ Пуск'; });
-    player.addEventListener('play',  () => { btn.textContent = '⏸️ Пауза'; });
+    player.addEventListener('play',  () => { btn.textContent = '🛑 Стоп'; });
   </script>
 </body>
 </html>
+
 
 
